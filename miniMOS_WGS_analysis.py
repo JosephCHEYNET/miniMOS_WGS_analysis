@@ -32,7 +32,7 @@ def runScript():
     originalUncompressedDir = os.path.join(rootDir, 'original_WGS_UncompressedFiles')
     # create a subdirectory called 'temporaryFiles' in the pathToWorkingFolder
     temporaryFilesDir = os.path.join(rootDir, 'temporaryFiles')
-    for directory in [temporaryFilesDir]:#originalUncompressedDir, originalCompressedDir
+    """for directory in [temporaryFilesDir]:#originalUncompressedDir, originalCompressedDir
         if not os.path.exists(directory):
             os.makedirs(directory)
     # Move the original .gz files to the subdirectory
@@ -53,7 +53,7 @@ def runScript():
                                 outputFileRev.write(line)
                         line_count += 1
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"Ending time: {current_time}")
+    print(f"Ending time: {current_time}")"""
 
     # List all the files in the temporaryFilesDir
     files = os.listdir(temporaryFilesDir)
@@ -79,11 +79,12 @@ def runScript():
                 lineObjects.append(lineObj)
         # sort the array by textBefore
         lineObjects.sort(key=lambda x: x.textBefore)
+        # get the name of the file without the extension
+        fileName, fileExtension = os.path.splitext(file)
         # write the sorted array to a new file
-        with open(os.path.join(temporaryFilesDir, file+"Sorted"), 'w') as f:
+        with open(os.path.join(temporaryFilesDir, fileName+"-sorted."+fileExtension), 'w') as f:
             for lineObj in lineObjects:
-                f.write(lineObj.textBefore)
-                f.write(lineObj.line)
+                f.write(lineObj.textBefore + ' ' + lineObj.line)
     #fenetre.destroy()
     messagebox.showinfo('succes', 'la conversion est faite')
 
