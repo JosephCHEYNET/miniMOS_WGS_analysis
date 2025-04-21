@@ -32,7 +32,7 @@ def runScript():
     originalUncompressedDir = os.path.join(rootDir, 'original_WGS_UncompressedFiles')
     # create a subdirectory called 'temporaryFiles' in the pathToWorkingFolder
     temporaryFilesDir = os.path.join(rootDir, 'temporaryFiles')
-    """for directory in [temporaryFilesDir]:#originalUncompressedDir, originalCompressedDir
+    for directory in [temporaryFilesDir]:#originalUncompressedDir, originalCompressedDir
         if not os.path.exists(directory):
             os.makedirs(directory)
     # Move the original .gz files to the subdirectory
@@ -53,7 +53,7 @@ def runScript():
                                 outputFileRev.write(line)
                         line_count += 1
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"Ending time: {current_time}")"""
+    print(f"Ending time: {current_time}")
 
     # List all the files in the temporaryFilesDir
     files = os.listdir(temporaryFilesDir)
