@@ -12,6 +12,12 @@ outputFileName_rev = "output_search_ITR-reverse.txt"
 ITR_20nt_fwd = "TCAGGTGTACAAGTATGAAA"
 ITR_20nt_rev = "TTTCATACTTGTACACCTGA"
 
+# define and object with properties textBefore and line
+class lineObject:
+    def __init__(self, textBefore, line):
+        self.textBefore = textBefore
+        self.line = line
+
 def chooseDirectory():
     dir = filedialog.askdirectory(initialdir=pathToWorkingFolder.get(),title="Choose working directory",mustexist=True)
     pathToWorkingFolder.set(dir)
@@ -48,6 +54,36 @@ def runScript():
                         line_count += 1
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"Ending time: {current_time}")
+
+    # List all the files in the temporaryFilesDir
+    files = os.listdir(temporaryFilesDir)
+    for file in files:
+        # create an array of lineObject
+        lineObjects = []
+        # read the file line by line and check the first 20 characters before ITR_20nt_fwd
+        with open(os.path.join(temporaryFilesDir, file), 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                # check the position of the ITR_20nt_fwd in the line
+                pos = line.find(ITR_20nt_fwd)
+                # extract 20 characters before pos
+                start = pos - 20
+                end = pos
+                # check if the start is less than 0
+                if start < 0:
+                    start = 0
+                textBefore = line[start:end]
+                # create an object of lineObject with textBefore and line
+                lineObj = lineObject(textBefore, line)
+                # add the object to the array
+                lineObjects.append(lineObj)
+        # sort the array by textBefore
+        lineObjects.sort(key=lambda x: x.textBefore)
+        # write the sorted array to a new file
+        with open(os.path.join(temporaryFilesDir, file+"Sorted"), 'w') as f:
+            for lineObj in lineObjects:
+                f.write(lineObj.textBefore)
+                f.write(lineObj.line)
     #fenetre.destroy()
     messagebox.showinfo('succes', 'la conversion est faite')
 
