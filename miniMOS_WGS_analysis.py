@@ -5,8 +5,6 @@ import os
 from os import path
 import glob
 import gzip
-import shutil
-import json
 from datetime import datetime
 
 outputFileName_fwd = "output_search_ITR-forward.txt"
